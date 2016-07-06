@@ -7,36 +7,12 @@ $(function() {
 		});
 	};
 
-	//E-mail Ajax Send
-	//Documentation & Example: https://github.com/agragregra/uniMail
-	$("form").submit(function() { //Change
-		var th = $(this);
-		$.ajax({
-			type: "POST",
-			url: "mail.php", //Change
-			data: th.serialize()
-		}).done(function() {
-			alert("Thank you!");
-			setTimeout(function() {
-				// Done Functions
-				th.trigger("reset");
-			}, 1000);
-		});
-		return false;
-	});
-
-	//Chrome Smooth Scroll
-	try {
-		$.browserSelector();
-		if($("html").hasClass("chrome")) {
-			$.smoothScroll();
-		}
-	} catch(err) {
-
-	};
-
 	$("img, a").on("dragstart", function(event) { event.preventDefault(); });
 	
+});
+
+$(".scroll-top").click(function() {
+  $("html, body").animate({ scrollTop: 0 }, "slow");
 });
 
 $(window).load(function() {
@@ -75,8 +51,31 @@ $(document).ready(function(){
 
 	$(".news-owl-carousel").owlCarousel({
 		loop: true,
-		items: 4,
 		center: false,
+		dots: true,
+		autoplay: true,
+		responsive : {
+    // breakpoint from 0 up
+    0 : {
+        items: 1
+    },
+    480 : {
+        items: 2
+    },
+    768 : {
+        items: 3
+    },
+    // breakpoint from 768 up
+    991 : {
+        items: 4
+    }
+}
+	});
+
+	$(".testimonials-carousel").owlCarousel({
+		loop: true,
+		items: 1,
+		center: true,
 		dots: true,
 		autoplay: true
 	});
@@ -85,7 +84,7 @@ $(document).ready(function(){
 	{
     boxClass:     'wow',      // animated element css class (default is wow)
     animateClass: 'animated', // animation css class (default is animated)
-    offset:       100,          // distance to the element when triggering the animation (default is 0)
+    offset:       50,          // distance to the element when triggering the animation (default is 0)
     mobile:       true,       // trigger animations on mobile devices (default is true)
     live:         true,       // act on asynchronously loaded content (default is true)
     callback:     function(box) {
@@ -96,8 +95,20 @@ $(document).ready(function(){
   }
   );
 	wow.init();
+	$('a').smoothScroll();
 
 	$(function(){
     $('#filter-container').mixItUp();
 	});
 });
+
+$(window).on("scroll", function () {
+            if ($(window).scrollTop() > 200) {
+                $(".navbar").removeClass("transparent-nav");
+                $(".scroll-top").css("display", "block");
+            }
+            else {
+                $(".navbar").addClass("transparent-nav");
+                $(".scroll-top").css("display", "none");
+            }
+        });
